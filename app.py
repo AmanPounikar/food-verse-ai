@@ -55,8 +55,11 @@ with st.sidebar:
     if "Gemini" in provider_option:
         provider = "gemini"
         default_gemini_key = os.getenv("GEMINI_API_KEY", "")
-        if hasattr(st, "secrets") and "GEMINI_API_KEY" in st.secrets:
-            default_gemini_key = st.secrets["GEMINI_API_KEY"]
+        try:
+            if "GEMINI_API_KEY" in st.secrets:
+                default_gemini_key = st.secrets["GEMINI_API_KEY"]
+        except Exception:
+            pass
             
         api_key = st.text_input(
             "Gemini API Key",
@@ -77,8 +80,11 @@ with st.sidebar:
     elif "Groq" in provider_option:
         provider = "groq"
         default_groq_key = os.getenv("GROQ_API_KEY", "")
-        if hasattr(st, "secrets") and "GROQ_API_KEY" in st.secrets:
-            default_groq_key = st.secrets["GROQ_API_KEY"]
+        try:
+            if "GROQ_API_KEY" in st.secrets:
+                default_groq_key = st.secrets["GROQ_API_KEY"]
+        except Exception:
+            pass
 
         api_key = st.text_input(
             "Groq API Key",
