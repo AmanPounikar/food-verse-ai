@@ -688,3 +688,21 @@ Return ONLY valid JSON.
                 ]
             }
         }
+
+# =============================================================================
+# Streamlit Cloud Entrypoint Forwarder
+# If Streamlit is accidentally configured to run modules/ai_engine.py,
+# automatically route execution to the main app.py UI.
+# =============================================================================
+if __name__ == "__main__":
+    import sys
+    from pathlib import Path
+    import runpy
+
+    root_dir = Path(__file__).resolve().parent.parent
+    if str(root_dir) not in sys.path:
+        sys.path.insert(0, str(root_dir))
+    app_file = root_dir / "app.py"
+    if app_file.exists():
+        runpy.run_path(str(app_file), run_name="__main__")
+
